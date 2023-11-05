@@ -34,14 +34,14 @@ class PostDao {
   async createPost(body) {
     const pool = mysql2.createPool(config)
     const query = "INSERT INTO posts (title, content, issue_date, author_id) VALUES (?, ?, ?, ?)"
-    const res = await pool.query(query, Object.values(body))
+    const res = await pool.query(query, [body.title, body.content, body.issue_date, body.author_id])
     pool.end()
     return res
   }
   async updatePostById(body, id) {
     const pool = mysql2.createPool(config)
     const query = 'UPDATE posts SET title = ?, content = ?, issue_date = ?, author_id = ? WHERE id = ?'
-    const res = await pool.query(query, [...Object.values(body), id])
+    const res = await pool.query(query, [body.title, body.content, body.issue_date, body.author_id, id])
     pool.end()
     return res
   }

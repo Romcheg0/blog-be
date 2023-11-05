@@ -27,14 +27,14 @@ class UserDao {
   async createUser(body) {
     const pool = mysql2.createPool(config)
     const query = "INSERT INTO users (first_name, last_name, date_of_birth, role) VALUES (?, ?, ?, ?)"
-    const res = await pool.query(query, Object.values(body))
+    const res = await pool.query(query, [body.first_name, body.last_name, body.date_of_birth, body.role])
     pool.end()
     return res
   }
   async updateUserById(body, id) {
     const pool = mysql2.createPool(config)
     const query = 'UPDATE users SET first_name = ?, last_name = ?, date_of_birth = ?, role = ? WHERE id = ?'
-    const res = await pool.query(query, [...Object.values(body), id])
+    const res = await pool.query(query, [body.first_name, body.last_name, body.date_of_birth, body.role, id])
     pool.end()
     return res
   }
