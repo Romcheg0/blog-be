@@ -14,7 +14,10 @@ const postsController = new PostsController()
 
 app.get('/users', usersController.getUsers)
 app.get('/users/:userId', usersController.getUserById)
+app.get('/users/username/:username', usersController.getUserByUsername)
+app.post('/users/authenticate/auth', bodyParser.json(), usersController.authenticate)
 app.put('/users/:userId', bodyParser.json(), usersController.updateUserById)
+app.put('/users/password/:id', bodyParser.json(), usersController.updateUserPassword)
 app.post('/users', bodyParser.json(), usersController.createUser)
 app.delete('/users/:userId', usersController.deleteUserById)
 
