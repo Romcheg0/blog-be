@@ -54,6 +54,33 @@ class UsersController {
       res.sendStatus(500)
     }
   }
+  async getUserByUsername(req, res) {
+    try {
+      const [rows, fields] = await userDao.getUserByUsername(req.params.username)
+      res.send(rows)
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500)
+    }
+  }
+  async authenticate(req, res) {
+    try {
+      const [rows] = await userDao.authenticate(req.body)
+      res.json({ authenticated: !!rows.length })
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500)
+    }
+  }
+  async updateUserPassword(req, res) {
+    try {
+      const [rows, fields] = await userDao.updateUserPassword(req.params.id, req.body.password)
+      res.json({ isChanged: !!rows.affectedRows })
+    } catch (e) {
+      console.error(e);
+      res.sendStatus(500)
+    }
+  }
 }
 
 module.exports = UsersController
